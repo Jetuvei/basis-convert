@@ -30,7 +30,7 @@ KNOWN_BASES = {2: bases.BASE2,
                16: bases.BASE16
                }
 
-KNOWN_BASES_MESSAGE = "Known bases:"
+KNOWN_BASES_MESSAGE = "Known bases:\n"
 for basis in KNOWN_BASES:
     KNOWN_BASES_MESSAGE += str(basis) + "\n"
 
@@ -80,7 +80,7 @@ number.
         
         value += base10List[-i] * N**(i-1)
 
-    return value    
+    return value # returns int
     
 # ---------------------------------------------:
 
@@ -111,7 +111,7 @@ The largest power is 3, and this should be returned.
         while new_basis_size ** (power+1) <= n_base10:
             power += 1
         
-    return power
+    return power # must return int
 
 def getCharValList(n_base10, new_basis_size):
     r"""Return a list of integers, where the integers are
@@ -121,7 +121,7 @@ e.g. 175 in base 16 should return [10,15]
 """
     
     max_power = findMaxPower(n_base10, new_basis_size)
-    num = n_base10
+    num = int(n_base10) # make sure this is actually an integer
 
     cvl = []
     for i in range(0, max_power + 1):
@@ -192,8 +192,9 @@ EXIT CODES:
     else:
         
         # first, check that the given bases are ones we know about
+        # (remember: everything from the command line is a string)
         for basis in [basis_from, basis_to]:
-            if basis not in KNOWN_BASES:
+            if int(basis) not in KNOWN_BASES:
                 unknown_bases = True
                 print "Unknown basis:" + str(basis)
                 
@@ -249,19 +250,19 @@ def test_main_case_1_1():
 def test_main_case_1_2():
     assert main_case_1("8",2) == "1000"
 
-def test_main_case_2():
-    assert main_case_2("1000",10) == 8
+def test_main_case_2_1():
+    assert main_case_2("1000",2) == 8
 
 def test_main_1():
-    """ FF -> 256 -> 100000000 """
-    assert main("FF", 16, 2, True)
+    """ FF -> 255 -> 11111111 """
+    assert main("FF", 16, 2, True) == "11111111"
 
 # run from cmd line    
 
 if __name__ == "__main__":
     n = sys.argv[1]
-    b_from = sys.argv[2]
-    b_to = sys.argv[3]
+    b_from = int(sys.argv[2])
+    b_to = int(sys.argv[3])
     main(n, b_from, b_to, False) # False: not a test
 
 # EOF
