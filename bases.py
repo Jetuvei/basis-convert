@@ -1,24 +1,29 @@
 
-# generic/'abstract' Base class:
+"""Basis class for use with 'convert.py'
+"""
 
-class Base:
-    r"""Generic base class for defining a basis for 
-converting integers between counting bases.
+class Basis:
+    r"""Class for defining a basis for converting  
+    integers between counting bases.
 
 Properties:
 
-SIZE        int        size of the basis. (e.g. 10 for base 10)
+_SIZE       int        size of the basis. (e.g. 10 for base 10)
 
-NUMERALS    dictionary:
+_NUMERALS   dictionary:
 
             key:    int    integer value less than SIZE
             value:  str    character to use when printing 
                            this number (e.g. 10:"A" for base 16)
 
 """
-    def __init__(self):
-        _SIZE = None
-        _NUMERALS={}
+    def __init__(self, s, n):
+        try:
+            assert s == len(n)
+        except AssertionError:
+            raise ValueError("Basis size 's' does not equal the size of the numerals dictionary 'n'")
+        _SIZE = s
+        _NUMERALS = n
 
     def getSize(self):
         return _SIZE
