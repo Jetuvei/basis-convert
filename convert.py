@@ -84,14 +84,18 @@ than the base 10 number. For example:
 The largest power is 3, and this should be returned,
 """
 
+    # check that we've been given an int for the basis size
     if type(new_basis_size) != int:
         raise TypeError("Expected type int, found " + str(type(new_basis_size)))
     else:
         pass
-    
-    power = 0
-    while new_basis_size ** power < n_base10:
-        power += 1
+
+    if n_base10 == 0:
+        power = None
+    else:
+        power = 0
+        while new_basis_size ** (power+1) <= n_base10:
+            power += 1
         
     return power
 
@@ -160,7 +164,8 @@ def test_convertToBase10_1():
     assert convertToBase10("AF", bases.BASE16) == 175
 
 def test_getCharValList_1():
-    assert getCharValList(175, bases.BASE16.getSize()) == ["A","F"]
+    assert getCharValList(175, bases.BASE16.getSize()) == [10,15]
+
 
 # run from cmd line    
 
