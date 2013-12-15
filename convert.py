@@ -23,6 +23,13 @@ __doc__=r"""Command line arguments:
 import sys
 import bases
 
+# KNOWN BASES
+
+KNOWN_BASES = {2: bases.BASE2,
+               10: bases.BASE10,
+               16: bases.BASE16
+               }
+
 # converting TO base 10:--------------------------
 
 def createBase10List(representation, basis):
@@ -142,9 +149,22 @@ this function uses getCharValList(...)
 
 # main
 
-def main():
-    """UNDER CONSTRUCTION"""
-    pass
+def main(number, basis_from, basis_to):
+    """The main function should enable us to take three arguments from the command line:
+
+1. number (string representation)
+2. basis to convert FROM
+3. basis to convert TO
+
+"""
+    # if basis_from == basis_to, don't need to do anything:
+    if basis_from == basis_to:
+        return number
+    
+    # otherwise
+    else:
+        pass # unfinished
+        
 
 # TESTS
 
@@ -170,6 +190,9 @@ def test_getCharValList_1():
 # run from cmd line    
 
 if __name__ == "__main__":
-    main()
+    n = sys.argv[1]
+    b_from = sys.argv[2]
+    b_to = sys.argv[3]
+    main(n, b_from, b_to)
 
 # EOF
