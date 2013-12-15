@@ -30,6 +30,10 @@ KNOWN_BASES = {2: bases.BASE2,
                16: bases.BASE16
                }
 
+KNOWN_BASES_MESSAGE = "Known bases:"
+for basis in KNOWN_BASES:
+    KNOWN_BASES_MESSAGE += str(basis) + "\n"
+
 # converting TO base 10:--------------------------
 
 def createBase10List(representation, basis):
@@ -88,7 +92,7 @@ than the base 10 number. For example:
 
 12 in base 2 is 1*2^3 + 1*2^2 + 0*2^1 + 0*2^0
 
-The largest power is 3, and this should be returned,
+The largest power is 3, and this should be returned.
 """
 
     # check that we've been given an int for the basis size
@@ -96,6 +100,9 @@ The largest power is 3, and this should be returned,
         raise TypeError("Expected type int, found " + str(type(new_basis_size)))
     else:
         pass
+
+    # make sure we have an integer value of n_base10:
+    n_base10 = int(n_base10)
 
     if n_base10 == 0:
         power = None
@@ -147,24 +154,74 @@ this function uses getCharValList(...)
 
 # ---------------------------------------------:
 
+def main_case_1(number, basis_to):
+    """CASE 1: the 'from' basis is 10, the 'to' basis is not 10."""
+    return convertFromBase10(number, KNOWN_BASES[basis_to])
+    
+def main_case_2(number, basis_from):
+    """CASE 2: the 'to' basis is 10, the 'from' basis is not 10"""
+    return convertToBase10(number, KNOWN_BASES[basis_from])
+
+def main_case_3(number, basis_from, basis_to):
+    """CASE 3: neither the 'to' nor the 'from' bases are 10"""
+    return main_case_1( main_case_2( number, basis_from ), basis_to )
+                              
+
 # main
 
-def main(number, basis_from, basis_to):
+def main(number, basis_from, basis_to, is_test):
     """The main function should enable us to take three arguments from the command line:
 
 1. number (string representation)
 2. basis to convert FROM
 3. basis to convert TO
 
+EXIT CODES:
+
+1. one or more unknown/unrecognised bases supplied in arguments
+
 """
+    result = None
+    unknown_bases = False
+
     # if basis_from == basis_to, don't need to do anything:
     if basis_from == basis_to:
-        return number
+        result = number
     
     # otherwise
     else:
-        pass # unfinished
         
+        # first, check that the given bases are ones we know about
+        for basis in [basis_from, basis_to]:
+            if basis not in KNOWN_BASES:
+                unknown_bases = True
+                print "Unknown basis:" + str(basis)
+                
+        if unknown_bases:
+            print KNOWN_BASES_MESSAGE
+            sys.exit(1)
+
+        # otherwise, if we recognise BOTH of the bases: carry on
+        else:
+
+            if basis_from == 10:
+                
+                result = main_case_1(number, basis_to)
+
+            elif basis_to == 10:
+                
+                result = main_case_2(number, basis_from)
+
+            else:
+                
+                result = main_case_3(number, basis_from, basis_to)
+
+    if is_test:
+        return result
+    else:
+        print result
+        sys.exit(0)
+            
 
 # TESTS
 
@@ -186,6 +243,18 @@ def test_convertToBase10_1():
 def test_getCharValList_1():
     assert getCharValList(175, bases.BASE16.getSize()) == [10,15]
 
+def test_main_case_1_1():
+    assert main_case_1(8,2) == "1000"
+
+def test_main_case_1_2():
+    assert main_case_1("8",2) == "1000"
+
+def test_main_case_2():
+    assert main_case_2("1000",10) == 8
+
+def test_main_1():
+    """ FF -> 256 -> 100000000 """
+    assert main("FF", 16, 2, True)
 
 # run from cmd line    
 
@@ -193,6 +262,6 @@ if __name__ == "__main__":
     n = sys.argv[1]
     b_from = sys.argv[2]
     b_to = sys.argv[3]
-    main(n, b_from, b_to)
+    main(n, b_from, b_to, False) # False: not a test
 
 # EOF
