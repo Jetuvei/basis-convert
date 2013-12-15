@@ -46,7 +46,7 @@ use this output to generate a base 10 number!
     btl = []
     
     for i in range(1, N+1):
-        btl = basis.getBase10Int( representation[-i] ) + btl
+        btl = [ basis.getBase10Int( representation[-i] ) ] + btl
 
     return btl
 
@@ -65,7 +65,7 @@ number.
     # add together decimal values of each character from 
     # <representation>
     value = 0
-    for i in range(1, lane(base10List) +1):
+    for i in range(1, len(base10List) +1):
         
         value += base10List[-i] * N**(i-1)
 
@@ -83,6 +83,11 @@ than the base 10 number. For example:
 
 The largest power is 3, and this should be returned,
 """
+
+    if type(new_basis_size) != int:
+        raise TypeError("Expected type int, found " + str(type(new_basis_size)))
+    else:
+        pass
     
     power = 0
     while new_basis_size ** power < n_base10:
@@ -155,11 +160,11 @@ def test_convertToBase10_1():
     assert convertToBase10("AF", bases.BASE16) == 175
 
 def test_getCharValList_1():
-    assert getCharValList(175, bases.BASE16) == ["A","F"]
+    assert getCharValList(175, bases.BASE16.getSize()) == ["A","F"]
 
 # run from cmd line    
 
-if __name___ == "__main__":
+if __name__ == "__main__":
     main()
 
 # EOF

@@ -28,11 +28,16 @@ _NUMERALS   dictionary:
             assert s == len(n)
         except AssertionError:
             raise ValueError("Basis size 's' does not equal the size of the numerals dictionary 'n'")
-        _SIZE = s
-        _NUMERALS = n
+        self._SIZE = s
+        self._NUMERALS = n
 
     def getSize(self):
-        return _SIZE
+        """Return the basis size"""
+        return self._SIZE
+
+    def getNumerals(self):
+        """Return the numerals dictionary"""
+        return self._NUMERALS
 
     def getNumeral(self, n):
         r"""return numeral corresponding to the representation
@@ -44,7 +49,7 @@ e.g. base 2:   0 -> "0"
      base 10:  9 -> "9"
      base 16: 11 -> "B"
 """
-        return _NUMERALS[n]
+        return self._NUMERALS[n]
 
     def getBase10Int(self, c):
         r"""return base 10 intger corresponding to the 
@@ -52,8 +57,8 @@ character c from the numerals/representation in this
 basis.
 """
         value = None
-        for n in _NUMERALS:
-            if _NUMERALS[n] == c:
+        for n in self._NUMERALS:
+            if self._NUMERALS[n] == c:
                 value = n
             else:
                 pass
