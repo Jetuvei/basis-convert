@@ -111,8 +111,20 @@ def convertFromBase10(n_base10, basis):
 
 # ---------------------------------------------:
 
+# main
+
 def main():
-    
+    """UNDER CONSTRUCTION"""
+
+# TESTS
+
+def test_findMaxPower_1():
+    assert findMaxPower(16,2) == 4
+
+def test_findMaxPower_2():
+    assert findMaxPower(15,2) == 3
+
+# run from cmd line    
 
 if __name___ == "__main__":
     main()

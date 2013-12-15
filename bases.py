@@ -18,6 +18,12 @@ _NUMERALS   dictionary:
 
 """
     def __init__(self, s, n):
+        """Initialise the Basis class with an integer s giving the size of the basis, and a dictionary n which satisfies these 2 criteria:
+
+1. it's length is the same as s
+2. all its keys are integers
+"""
+
         try:
             assert s == len(n)
         except AssertionError:
@@ -55,61 +61,43 @@ basis.
 
 # base 2 / binary
 
-class Base2(Base):
-    r"""Class for base 2, AKA binary
-"""
-
-    def __init__(self):
-        _SIZE = 2
-        _NUMERALS = {0:"0",
-                     1:"1"
-                     }
+BASE2 = Basis(2, {0:"0",
+                  1:"1"
+                  }
+              )
 
 # base 10 / decimal
 
-class Base10(Base):
-    r"""Class for base 10. Basically pointless, as
-this whole module/package uses base 10 as its working
-basis.
-"""
-
-    def __init__(self):
-        _SIZE = 10
-        _NUMERALS = {0:"0",
-                     1:"1",
-                     2:"2",
-                     3:"3",
-                     4:"4",
-                     5:"5",
-                     6:"6",
-                     7:"7",
-                     8:"8",
-                     9:"9"
-                     }
+BASE10 = Basis(10, {0:"0",
+                    1:"1",
+                    2:"2",
+                    3:"3",
+                    4:"4",
+                    5:"5",
+                    6:"6",
+                    7:"7",
+                    8:"8",
+                    9:"9"
+                    }
+               )
 
 # base 16 / hexadecimal
-
-class Base16(Base):
-    r"""
-"""
-
-    def __init__(self):
-        _SIZE = 16
-        _NUMERALS =  {0:"0",
-                      1:"1",
-                      2:"2",
-                      3:"3",
-                      4:"4",
-                      5:"5",
-                      6:"6",
-                      7:"7",
-                      8:"8",
-                      9:"9",
-                      10:"A",
-                      11:"B",
-                      12:"C",
-                      13:"D",
-                      14:"E",
-                      15:"F"
-                      }
-
+                     
+BASE16 = Basis(16, {0:"0",
+                    1:"1",
+                    2:"2",
+                    3:"3",
+                    4:"4",
+                    5:"5",
+                    6:"6",
+                    7:"7",
+                    8:"8",
+                    9:"9",
+                    10:"A",
+                    11:"B",
+                    12:"C",
+                    13:"D",
+                    14:"E",
+                    15:"F"
+                    }
+               )
